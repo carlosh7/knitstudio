@@ -1,0 +1,29 @@
+{
+  "name": "knitstudio",
+  "version": "1.0.0",
+  "description": "Visual Application Builder Universal — v1.0.0 MVP Complete",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter @knitstudio/builder dev\" \"pnpm --filter @knitstudio/api dev\"",
+    "build": "pnpm --filter @knitstudio/core build && pnpm --filter @knitstudio/canvas build && pnpm --filter @knitstudio/ui build && pnpm --filter @knitstudio/registry build && pnpm --filter @knitstudio/runtime build && pnpm --filter @knitstudio/export build && pnpm --filter @knitstudio/git build && pnpm --filter @knitstudio/ai build && pnpm --filter @knitstudio/annotations build && pnpm --filter @knitstudio/monitoring build && pnpm --filter @knitstudio/bridge build && pnpm --filter @knitstudio/cli build && pnpm --filter @knitstudio/mcp-server build && pnpm --filter @knitstudio/api build && pnpm --filter @knitstudio/builder build",
+    "build:all": "pnpm build && pnpm --filter @knitstudio/storybook build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "clean": "pnpm -r clean && rm -rf node_modules"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.3",
+    "@typescript-eslint/eslint-plugin": "^8.30.1",
+    "@typescript-eslint/parser": "^8.30.1",
+    "eslint": "^9.25.0",
+    "prettier": "^3.5.3",
+    "vitest": "^3.1.2"
+  }
+}

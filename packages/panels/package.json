@@ -1,0 +1,17 @@
+{
+  "name": "@knitstudio/panels",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lazy-loadable panel entry points for knitstudio builder",
+  "scripts": {
+    "typecheck": "echo 'no source files to check'",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "knitstudio": {
+    "note": "Panel sources live in @knitstudio/builder/src/panels/. This package provides lazy-loadable entry points for tree-shaking in production builds. See ARCHITECTURE.md Package Structure section."
+  }
+}

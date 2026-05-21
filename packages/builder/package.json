@@ -1,0 +1,46 @@
+{
+  "name": "@knitstudio/builder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/main.tsx",
+    "./panels/*": "./src/panels/*.tsx",
+    "./components/*": "./src/components/*.tsx",
+    "./store/*": "./src/store/*.ts"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview",
+    "lint": "eslint src/",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@knitstudio/canvas": "workspace:*",
+    "@knitstudio/core": "workspace:*",
+    "@knitstudio/registry": "workspace:*",
+    "@knitstudio/ui": "workspace:*",
+    "@tailwindcss/vite": "^4.3.0",
+    "@xyflow/react": "^12.10.2",
+    "grapesjs": "^0.22.16",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-intl": "^10.1.8",
+    "reactflow": "^11.11.4",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.4"
+  }
+}

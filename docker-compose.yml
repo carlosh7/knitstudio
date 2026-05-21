@@ -1,0 +1,84 @@
+name: knitstudio
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: docker/builder.Dockerfile
+      target: runner
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://api:3001
+    depends_on:
+      api:
+        condition: service_started
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://knitstudio:knitstudio@db:5432/knitstudio
+      REDIS_URL: redis://redis:6379
+      CORS_ORIGIN: http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: knitstudio
+      POSTGRES_PASSWORD: knitstudio
+      POSTGRES_DB: knitstudio
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U knitstudio"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    restart: unless-stopped
+
+  mcp:
+    build:
+      context: .
+      dockerfile: docker/mcp.Dockerfile
+    ports:
+      - "3100:3100"
+    environment:
+      - API_URL=http://api:3001
+    depends_on:
+      - api
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: unless-stopped
+    profiles:
+      - management
+
+volumes:
+  pgdata:
+  redisdata:
+  portainer_data:

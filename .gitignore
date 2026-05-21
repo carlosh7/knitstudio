@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.local
+*.tsbuildinfo
+coverage/
+.turbo/
+.cache/
+.DS_Store
+*.log
+# Keep example env files
+!.env.example

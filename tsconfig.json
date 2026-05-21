@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@knitstudio/core": ["./packages/core/src"],
+      "@knitstudio/canvas": ["./packages/canvas/src"],
+      "@knitstudio/ui": ["./packages/ui/src"],
+      "@knitstudio/builder": ["./packages/builder/src"],
+      "@knitstudio/registry": ["./packages/registry/src"],
+      "@knitstudio/monitoring": ["./packages/monitoring/src"],
+      "@knitstudio/ai": ["./packages/ai/src"],
+      "@knitstudio/import": ["./packages/import/src"],
+      "@knitstudio/export": ["./packages/export/src"],
+      "@knitstudio/runtime": ["./packages/runtime/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
