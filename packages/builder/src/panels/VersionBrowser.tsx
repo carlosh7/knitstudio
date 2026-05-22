@@ -1,3 +1,5 @@
+import { uuid } from "../lib/uuid";
+import { useI18n } from "../i18n";
 import { useState } from "react";
 import { useUIStore } from "../store/useUIStore";
 
@@ -17,6 +19,7 @@ const sampleVersions: Version[] = [
 ];
 
 export function VersionBrowser() {
+  const { t } = useI18n();
   const addToast = useUIStore((s) => s.addToast);
   const [versions, setVersions] = useState<Version[]>(sampleVersions);
   const [selected, setSelected] = useState<string | null>(null);
@@ -29,7 +32,7 @@ export function VersionBrowser() {
       const target = prev[idx];
       return [
         {
-          id: crypto.randomUUID(),
+          id: uuid(),
           version: prev[0].version + 1,
           timestamp: new Date().toLocaleString(),
           author: "You",
@@ -50,7 +53,7 @@ export function VersionBrowser() {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-white text-sm font-medium">Version Browser</h3>
+        <h3 className="text-white text-sm font-medium">{t("version.title")}</h3>
         <button onClick={toggleDiff} className={`px-2 py-1 text-xs rounded ${showDiff ? "bg-knit-primary text-white" : "bg-knit-bg text-knit-text-muted"}`}>
           {showDiff ? "Hide Diff" : "Show Diff"}
         </button>

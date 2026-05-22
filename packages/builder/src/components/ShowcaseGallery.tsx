@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { useState } from "react";
 
 const examples = [
@@ -17,6 +18,7 @@ interface ShowcaseGalleryProps {
 }
 
 export function ShowcaseGallery({ onSelect, onClose }: ShowcaseGalleryProps) {
+  const { t } = useI18n();
   const [filter, setFilter] = useState<number>(0);
 
   const filtered = filter === 0 ? examples : examples.filter((e) => e.level === filter);
@@ -25,15 +27,15 @@ export function ShowcaseGallery({ onSelect, onClose }: ShowcaseGalleryProps) {
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-knit-bg-alt border border-knit-border rounded-xl p-5 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-semibold">Showcase Gallery</h2>
-          <button onClick={onClose} className="text-knit-text-muted hover:text-white">×</button>
+          <h2 className="text-knit-text font-semibold">{t("showcase.title")}</h2>
+          <button onClick={onClose} className="text-knit-text-muted hover:text-knit-text">×</button>
         </div>
 
         <p className="text-xs text-knit-text-muted mb-4">Get inspired by these example projects. Click any to use it as a starting point.</p>
 
         {/* Filter */}
         <div className="flex gap-2 mb-4">
-          <button onClick={() => setFilter(0)} className={`px-3 py-1 text-xs rounded-md ${filter === 0 ? "bg-knit-primary text-white" : "bg-knit-bg text-knit-text-muted"}`}>All</button>
+          <button onClick={() => setFilter(0)} className={`px-3 py-1 text-xs rounded-md ${filter === 0 ? "bg-knit-primary text-white" : "bg-knit-bg text-knit-text-muted"}`}>{t("showcase.filter_all")}</button>
           {[1, 2, 3, 4].map((l) => (
             <button key={l} onClick={() => setFilter(l)} className={`px-3 py-1 text-xs rounded-md ${filter === l ? "bg-knit-primary text-white" : "bg-knit-bg text-knit-text-muted"}`}>Level {l}</button>
           ))}

@@ -1,3 +1,4 @@
+import { uuid } from "./uuid";
 import type { AppSchema, ComponentNode } from "@knitstudio/core";
 
 function parseHTML(html: string): ComponentNode {
@@ -40,7 +41,7 @@ function elementToNode(el: Element): ComponentNode {
 
   return {
     type,
-    key: `${type}-${crypto.randomUUID().slice(0, 8)}`,
+    key: `${type}-${uuid().slice(0, 8)}`,
     props: Object.keys(props).length > 0 ? props : undefined,
     styles: Object.keys(styles).length > 0 ? { base: styles } : undefined,
     children: children.length > 0 ? children : undefined,
@@ -90,7 +91,7 @@ export async function importFromHTML(html: string): Promise<AppSchema> {
     templates: {},
     pages: [
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         route: "/",
         title: "Imported Page",
         root,

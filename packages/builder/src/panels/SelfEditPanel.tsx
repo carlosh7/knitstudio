@@ -1,8 +1,10 @@
+import { useI18n } from "../i18n";
 import { useState } from "react";
 import { useBuilderStore } from "../store/useBuilderStore";
 import { useUIStore } from "../store/useUIStore";
 
 export function SelfEditPanel() {
+  const { t } = useI18n();
   const editor = useBuilderStore((s) => s.editor);
   const [mode, setMode] = useState<"off" | "shell">("off");
   const [shellLayout, setShellLayout] = useState<string>("");
@@ -30,7 +32,7 @@ export function SelfEditPanel() {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-white text-sm font-medium">Self-Edit Mode</h3>
+        <h3 className="text-white text-sm font-medium">{t("selfedit.title")}</h3>
         <span className={`text-xs px-2 py-0.5 rounded ${mode === "off" ? "bg-knit-bg text-knit-text-muted" : "bg-purple-700 text-white"}`}>
           {mode === "off" ? "OFF" : "ACTIVE"}
         </span>

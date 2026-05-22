@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { useState } from "react";
 import { getTemplatesByLevel } from "../templates";
 import type { Template } from "../templates";
@@ -8,6 +9,7 @@ interface TemplateSelectorProps {
 }
 
 export function TemplateSelector({ onSelect, onClose }: TemplateSelectorProps) {
+  const { t } = useI18n();
   const [level, setLevel] = useState<number>(3);
   const available = getTemplatesByLevel(level);
 
@@ -15,8 +17,8 @@ export function TemplateSelector({ onSelect, onClose }: TemplateSelectorProps) {
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-knit-bg-alt border border-knit-border rounded-xl p-5 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-semibold">Choose a Template</h2>
-          <button onClick={onClose} className="text-knit-text-muted hover:text-white">×</button>
+          <h2 className="text-knit-text font-semibold">{t("template.title")}</h2>
+          <button onClick={onClose} className="text-knit-text-muted hover:text-knit-text">×</button>
         </div>
 
         {/* Level selector */}
@@ -26,7 +28,7 @@ export function TemplateSelector({ onSelect, onClose }: TemplateSelectorProps) {
               key={l}
               onClick={() => setLevel(l)}
               className={`px-3 py-1 text-xs rounded-md transition ${
-                level === l ? "bg-knit-primary text-white" : "bg-knit-bg text-knit-text-muted hover:text-white"
+                level === l ? "bg-knit-primary text-white" : "bg-knit-bg text-knit-text-muted hover:text-knit-text"
               }`}
             >
               Level {l}

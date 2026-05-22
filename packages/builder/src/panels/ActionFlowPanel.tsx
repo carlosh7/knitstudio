@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { useCallback, useState } from "react";
 import {
   ReactFlow,
@@ -42,6 +43,7 @@ const initialEdges: Edge[] = [
 const nodeTypes = {};
 
 export function ActionFlowPanel() {
+  const { t } = useI18n();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 

@@ -1,8 +1,10 @@
+import { useI18n } from "../i18n";
 import { useEffect, useState } from "react";
 import { useContextTipsStore, contextTips } from "../store/useContextTipsStore";
 import { useBuilderStore } from "../store/useBuilderStore";
 
 export function ContextualTip() {
+  const { t } = useI18n();
   const isTipVisible = useContextTipsStore((s) => s.isTipVisible);
   const dismissTip = useContextTipsStore((s) => s.dismissTip);
   const editor = useBuilderStore((s) => s.editor);
@@ -45,7 +47,7 @@ export function ContextualTip() {
         <span className="text-xs text-knit-text flex-1">{tip.message}</span>
         <button
           onClick={() => { dismissTip(tip.id); setVisibleTip(null); }}
-          className="text-knit-text-muted hover:text-white text-xs shrink-0"
+          className="text-knit-text-muted hover:text-knit-text text-xs shrink-0"
         >
           Dismiss
         </button>

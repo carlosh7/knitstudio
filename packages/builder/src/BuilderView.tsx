@@ -6,6 +6,7 @@ import { useUndoStore } from "./store/useUndoStore";
 import { useSaveStore } from "./store/useSaveStore";
 import { useAutosave } from "./hooks/useAutosave";
 import { useQuickEdit } from "./hooks/useQuickEdit";
+import { useI18n } from "./i18n";
 import { BuilderCanvas } from "./BuilderCanvas";
 import { ActionFlowPanel } from "./panels/ActionFlowPanel";
 import { BlocksPanel } from "./panels/BlocksPanel";
@@ -17,6 +18,8 @@ import { MonitoringDashboard } from "./panels/MonitoringDashboard";
 import { SelfEditPanel } from "./panels/SelfEditPanel";
 import { ComponentSandbox } from "./panels/ComponentSandbox";
 import { ShortcutsPanel } from "./panels/ShortcutsPanel";
+import { ThemeToggle } from "./components/ThemeToggle";
+import { LanguageSelector } from "./components/LanguageSelector";
 import { WizardModal } from "./components/WizardModal";
 import { ChangelogModal } from "./components/ChangelogModal";
 import { RoadmapModal } from "./components/RoadmapModal";
@@ -33,20 +36,6 @@ import { DraftPublishedIndicator } from "./components/DraftPublishedIndicator";
 import { SkeletonPanel } from "./components/SkeletonPanel";
 import { PanelErrorBoundary } from "./components/PanelErrorBoundary";
 import { Panel } from "@knitstudio/ui";
-
-const panelConfig: Array<{ id: PanelId; label: string }> = [
-  { id: "blocks", label: "Components" },
-  { id: "layers", label: "Layers" },
-  { id: "styles", label: "Styles" },
-  { id: "actions", label: "Actions" },
-  { id: "data", label: "Data" },
-  { id: "ai", label: "AI" },
-  { id: "safety", label: "Safety" },
-  { id: "versions", label: "Versions" },
-  { id: "monitoring", label: "Monitor" },
-  { id: "selfedit", label: "SelfEdit" },
-  { id: "sandbox", label: "Sandbox" },
-];
 
 const createPageSteps = [
   { title: "Name your page", description: "Give your new page a name and URL route." },
@@ -89,6 +78,21 @@ export function BuilderView({ projectId, onBack }: BuilderViewProps) {
 
   useAutosave();
   useQuickEdit();
+  const { t } = useI18n();
+
+  const panelConfig: Array<{ id: PanelId; label: string }> = [
+    { id: "blocks", label: t("panel.components") },
+    { id: "layers", label: t("panel.layers") },
+    { id: "styles", label: t("panel.styles") },
+    { id: "actions", label: t("panel.actions") },
+    { id: "data", label: t("panel.data") },
+    { id: "ai", label: t("panel.ai") },
+    { id: "safety", label: t("panel.safety") },
+    { id: "versions", label: t("panel.versions") },
+    { id: "monitoring", label: t("panel.monitoring") },
+    { id: "selfedit", label: t("panel.selfedit") },
+    { id: "sandbox", label: t("panel.sandbox") },
+  ];
 
   useEffect(() => { setProjectId(projectId); }, [projectId, setProjectId]);
 
@@ -165,11 +169,11 @@ export function BuilderView({ projectId, onBack }: BuilderViewProps) {
         <div className="flex items-center gap-2">
           <button
             onClick={onBack}
-            className="text-knit-text-muted hover:text-white text-xs px-2 py-1 rounded hover:bg-knit-bg-hover transition"
+            className="text-knit-text-muted hover:text-knit-text text-xs px-2 py-1 rounded hover:bg-knit-bg-hover transition"
           >
-            ← Dashboard
+            {t("nav.back")}
           </button>
-          <span className="text-white font-bold text-base ml-2">knitstudio</span>
+          <span className="text-knit-text font-bold text-base ml-2">knitstudio</span>
           <span className="text-knit-text-muted text-xs">{projectId.slice(0, 8)}</span>
           <div className="ml-3">
             <SaveIndicator />
@@ -182,7 +186,7 @@ export function BuilderView({ projectId, onBack }: BuilderViewProps) {
             className={`px-3 py-1 text-xs rounded-md transition ${
               mode === "simple"
                 ? "bg-knit-primary text-white"
-                : "text-knit-text-muted hover:text-white"
+                : "text-knit-text-muted hover:text-knit-text"
             }`}
           >
             Simple
@@ -192,7 +196,7 @@ export function BuilderView({ projectId, onBack }: BuilderViewProps) {
             className={`px-3 py-1 text-xs rounded-md transition ${
               mode === "advanced"
                 ? "bg-knit-primary text-white"
-                : "text-knit-text-muted hover:text-white"
+                : "text-knit-text-muted hover:text-knit-text"
             }`}
           >
             Advanced
@@ -202,7 +206,7 @@ export function BuilderView({ projectId, onBack }: BuilderViewProps) {
           <div className="flex items-center gap-1">
           <button
             onClick={() => setShowSearch(true)}
-            className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition"
+            className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition"
             title="Search (Cmd+K)"
           >
             🔍
@@ -215,59 +219,37 @@ export function BuilderView({ projectId, onBack }: BuilderViewProps) {
               className={`px-3 py-1.5 text-xs rounded-md transition ${
                 activePanel === p.id
                   ? "bg-knit-primary text-white"
-                  : "text-knit-text-muted hover:text-white hover:bg-knit-bg-hover"
+                  : "text-knit-text-muted hover:text-knit-text hover:bg-knit-bg-hover"
               }`}
             >
               {p.label}
             </button>
           ))}
-          {/* Quick actions */}
-          <button onClick={() => setShowGallery(true)} className="ml-1 px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition" title="Showcase">🖼</button>
-          <button onClick={() => setShowChangelog(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition" title="Changelog">📋</button>
-          <button onClick={() => setShowRoadmap(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition" title="Roadmap">🗺</button>
-          <button onClick={() => setShowFeedback(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition" title="Feedback">💬</button>
-          <button onClick={() => setShowSettings(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition" title="Settings">⚙</button>
           <span className="w-px h-4 bg-knit-border mx-1" />
-          <button onClick={() => setShowHelp(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition" title="Help Center — F1 — docs.knitstudio.io">❓</button>
-          {panelConfig.map((p) => (
-            <button
-              key={p.id}
-              onClick={() => setActivePanel(p.id)}
-              className={`px-3 py-1.5 text-xs rounded-md transition ${
-                activePanel === p.id
-                  ? "bg-knit-primary text-white"
-                  : "text-knit-text-muted hover:text-white hover:bg-knit-bg-hover"
-              }`}
-            >
-              {p.label}
-            </button>
-          ))}
-          <button
-            onClick={() => setShowShortcuts(true)}
-            className="ml-1 px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition"
-            title="Keyboard shortcuts (?)"
-          >
-            ⌨
-          </button>
-          <button
-            onClick={() => setShowGridSettings(true)}
-            className="ml-1 px-2 py-1.5 text-xs text-knit-text-muted hover:text-white rounded-md hover:bg-knit-bg-hover transition"
-            title="Grid settings"
-          >
-            ⊞
-          </button>
+          <button onClick={() => setShowGallery(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition" title="Showcase">🖼</button>
+          <button onClick={() => setShowChangelog(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition" title={t("changelog.title")}>📋</button>
+          <button onClick={() => setShowRoadmap(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition" title={t("roadmap.title")}>🗺</button>
+          <button onClick={() => setShowFeedback(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition" title={t("feedback.type_feedback")}>💬</button>
+          <button onClick={() => setShowSettings(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition" title={t("settings.title")}>⚙</button>
+          <button onClick={() => setShowShortcuts(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition" title="Keyboard shortcuts (?)">⌨</button>
+          <button onClick={() => setShowGridSettings(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition" title={t("grid.title")}>⊞</button>
+          <button onClick={() => setShowHelp(true)} className="px-2 py-1.5 text-xs text-knit-text-muted hover:text-knit-text rounded-md hover:bg-knit-bg-hover transition" title={t("nav.help")}>❓</button>
+          <span className="w-px h-4 bg-knit-border mx-1" />
+          <LanguageSelector />
+          <ThemeToggle />
+          <span className="w-px h-4 bg-knit-border mx-1" />
           <button
             onClick={handlePublish}
             className="ml-1 px-3 py-1.5 text-xs rounded-md bg-knit-primary text-white hover:bg-knit-primary-hover transition"
           >
-            Publish
+            {t("action.publish")}
           </button>
         </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        {activePanel === "actions" ? (
-          <ActionFlowPanel />
+        {activePanel === "actions" || activePanel === "sandbox" ? (
+          activePanel === "sandbox" ? <ComponentSandbox /> : <ActionFlowPanel />
         ) : (
           <>
             {activePanel && (
@@ -286,7 +268,7 @@ export function BuilderView({ projectId, onBack }: BuilderViewProps) {
       {/* Simple mode wizard on first publish */}
       {showWizard && (
         <WizardModal
-          title="Create a new page"
+          title={t("wizard.createPage")}
           steps={createPageSteps}
           onComplete={() => {
             setShowWizard(false);

@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { useUIStore } from "../store/useUIStore";
 
 const changelog = [
@@ -11,12 +12,13 @@ const changelog = [
 ];
 
 export function ChangelogModal({ onClose }: { onClose: () => void }) {
+  const { t } = useI18n();
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-knit-bg-alt border border-knit-border rounded-xl p-5 max-w-lg w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-semibold">Changelog</h2>
-          <button onClick={onClose} className="text-knit-text-muted hover:text-white">×</button>
+          <h2 className="text-knit-text font-semibold">{t("changelog.title")}</h2>
+          <button onClick={onClose} className="text-knit-text-muted hover:text-knit-text">×</button>
         </div>
         <div className="space-y-4">
           {changelog.map((v) => (

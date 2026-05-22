@@ -1,7 +1,9 @@
+import { useI18n } from "../i18n";
 import { useState } from "react";
 import { useUIStore } from "../store/useUIStore";
 
 export function SettingsPanel({ onClose }: { onClose: () => void }) {
+  const { t } = useI18n();
   const addToast = useUIStore((s) => s.addToast);
   const [apiKey, setApiKey] = useState(localStorage.getItem("knitstudio-openai-key") || "");
 
@@ -15,12 +17,12 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-knit-bg-alt border border-knit-border rounded-xl p-5 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-semibold">Settings</h2>
+          <h2 className="text-white font-semibold">{t("settings.title")}</h2>
           <button onClick={onClose} className="text-knit-text-muted hover:text-white">×</button>
         </div>
 
         <div className="mb-4">
-          <label className="text-sm text-knit-text block mb-1">OpenAI API Key</label>
+          <label className="text-sm text-knit-text block mb-1">{t("settings.api_key")}</label>
           <input
             type="password"
             value={apiKey}
@@ -32,7 +34,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="mb-4">
-          <label className="text-sm text-knit-text block mb-1">Import from URL</label>
+          <label className="text-sm text-knit-text block mb-1">{t("settings.import_title")}</label>
           <input
             type="url"
             id="import-url"
@@ -57,7 +59,7 @@ export function SettingsPanel({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <button onClick={handleSave} className="w-full py-1.5 bg-knit-primary text-white rounded-lg text-sm">Save</button>
+        <button onClick={handleSave} className="w-full py-1.5 bg-knit-primary text-white rounded-lg text-sm">{t("data.save")}</button>
       </div>
     </div>
   );

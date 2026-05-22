@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Visual Application Builder Universal — v1.0.0 MVP Complete",
   "private": true,
+  "type": "module",
   "license": "MIT",
   "scripts": {
     "dev": "concurrently \"pnpm --filter @knitstudio/builder dev\" \"pnpm --filter @knitstudio/api dev\"",
@@ -11,6 +12,7 @@
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
+    "audit": "node scripts/audit.js",
     "clean": "pnpm -r clean && rm -rf node_modules"
   },
   "engines": {

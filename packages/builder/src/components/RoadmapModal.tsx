@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { useUIStore } from "../store/useUIStore";
 
 const phases = [
@@ -15,12 +16,13 @@ const phases = [
 ];
 
 export function RoadmapModal({ onClose }: { onClose: () => void }) {
+  const { t } = useI18n();
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-knit-bg-alt border border-knit-border rounded-xl p-5 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-semibold">Roadmap</h2>
-          <button onClick={onClose} className="text-knit-text-muted hover:text-white">×</button>
+          <h2 className="text-knit-text font-semibold">{t("roadmap.title")}</h2>
+          <button onClick={onClose} className="text-knit-text-muted hover:text-knit-text">×</button>
         </div>
         <div className="space-y-2">
           {phases.map((p) => (

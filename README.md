@@ -96,11 +96,29 @@ Como un telar que teje hilos sueltos en una tela cohesiva, knitstudio teje:
 - **Keystore cifrado**: AES-256-GCM para secrets
 - **Self-hosted total**: tus datos en tu servidor, 0 dependencia externa
 
-### 🐳 Infraestructura Enterprise
-- **Docker Compose**: builder + API + PostgreSQL + Redis + MCP + Portainer
-- **CI/CD**: GitHub Actions con build, typecheck, test, lint
-- **Offline-first**: Service Worker + IndexedDB, funciona sin internet
-- **i18n**: EN + ES desde el día 1, extensible a cualquier idioma
+### 🐳 Despliegue con Docker
+
+### Stack autónomo (recomendado)
+
+```bash
+docker compose up -d
+# Builder: http://localhost:3000
+# API:     http://localhost:3001
+# MCP:     http://localhost:3100
+```
+
+### Integración con Portainer existente
+
+Si ya tienes Portainer en tu equipo, **no necesitas instalar otro**. knitstudio proporciona un archivo para importar directamente:
+
+```
+1. Abre Portainer → Stacks → + Add Stack
+2. Pega el contenido de portainer-stack.yml
+3. Asigna nombre "knitstudio"
+4. Click "Deploy"
+```
+
+knitstudio **no instala ni gestiona Portainer**. Se integra con el que ya tengas.
 
 ---
 

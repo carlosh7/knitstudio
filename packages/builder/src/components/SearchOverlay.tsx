@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { useState, useEffect, useRef } from "react";
 
 interface SearchResult {
@@ -25,6 +26,7 @@ interface SearchOverlayProps {
 }
 
 export function SearchOverlay({ onClose, onAction }: SearchOverlayProps) {
+  const { t } = useI18n();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -56,13 +58,13 @@ export function SearchOverlay({ onClose, onAction }: SearchOverlayProps) {
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search pages, components, actions..."
+            placeholder={t("search.placeholder")}
             className="w-full bg-transparent text-white text-sm placeholder-knit-text-muted outline-none"
           />
         </div>
         <div className="max-h-80 overflow-y-auto">
           {results.length === 0 ? (
-            <div className="p-6 text-center text-knit-text-muted text-sm">No results</div>
+            <div className="p-6 text-center text-knit-text-muted text-sm">{t("search.noresults")}</div>
           ) : (
             results.map((r) => (
               <button

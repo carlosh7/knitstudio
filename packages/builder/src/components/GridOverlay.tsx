@@ -1,6 +1,8 @@
+import { useI18n } from "../i18n";
 import { useGridStore } from "../store/useGridStore";
 
 export function GridOverlay() {
+  const { t } = useI18n();
   const showGrid = useGridStore((s) => s.showGrid);
   const gridSize = useGridStore((s) => s.gridSize);
 

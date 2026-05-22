@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 interface Shortcut {
   keys: string;
   action: string;
@@ -15,6 +16,7 @@ const shortcuts: Shortcut[] = [
 ];
 
 export function ShortcutsPanel({ onClose }: { onClose: () => void }) {
+  const { t } = useI18n();
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div
@@ -22,14 +24,14 @@ export function ShortcutsPanel({ onClose }: { onClose: () => void }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-semibold">Keyboard Shortcuts</h2>
-          <button onClick={onClose} className="text-knit-text-muted hover:text-white text-lg">×</button>
+          <h2 className="text-knit-text font-semibold">{t("shortcuts.title")}</h2>
+          <button onClick={onClose} className="text-knit-text-muted hover:text-knit-text text-lg">×</button>
         </div>
         <div className="space-y-2">
           {shortcuts.map((s) => (
             <div key={s.keys} className="flex items-center justify-between text-sm">
               <span className="text-knit-text-muted">{s.action}</span>
-              <kbd className="px-2 py-0.5 bg-knit-bg border border-knit-border rounded text-xs text-white font-mono">
+              <kbd className="px-2 py-0.5 bg-knit-bg border border-knit-border rounded text-xs text-knit-text font-mono">
                 {s.keys}
               </kbd>
             </div>

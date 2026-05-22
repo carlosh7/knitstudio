@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 const presets = [
   { name: "iPhone 14 Pro", width: 390, height: 844 },
   { name: "iPhone 14 Pro Max", width: 430, height: 932 },
@@ -17,10 +18,11 @@ interface ViewportPresetsProps {
 }
 
 export function ViewportPresets({ currentWidth, onSelect, onClose }: ViewportPresetsProps) {
+  const { t } = useI18n();
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-knit-bg-alt border border-knit-border rounded-xl p-5 max-w-sm w-full mx-4" onClick={(e) => e.stopPropagation()}>
-        <h2 className="text-white font-semibold mb-4">Viewport Presets</h2>
+        <h2 className="text-knit-text font-semibold mb-4">Viewport Presets</h2>
         <div className="space-y-1">
           {presets.map((p) => (
             <button

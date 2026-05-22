@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { useEffect, useState } from "react";
 import { useBuilderStore } from "../store/useBuilderStore";
 import { getAllComponents, type ComponentDefinition } from "@knitstudio/registry";
@@ -10,6 +11,7 @@ function stylesToString(styles: Record<string, string>): string {
 }
 
 export function BlocksPanel() {
+  const { t } = useI18n();
   const editor = useBuilderStore((s) => s.editor);
   const [components, setComponents] = useState<ComponentDefinition[]>([]);
 

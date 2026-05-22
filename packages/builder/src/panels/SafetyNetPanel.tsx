@@ -1,8 +1,10 @@
+import { useI18n } from "../i18n";
 import { useSafetyNetStore } from "../store/useSafetyNetStore";
 import { useBuilderStore } from "../store/useBuilderStore";
 import { useUIStore } from "../store/useUIStore";
 
 export function SafetyNetPanel() {
+  const { t } = useI18n();
   const snapshots = useSafetyNetStore((s) => s.snapshots);
   const takeSnapshot = useSafetyNetStore((s) => s.takeSnapshot);
   const restoreSnapshot = useSafetyNetStore((s) => s.restoreSnapshot);
@@ -29,7 +31,7 @@ export function SafetyNetPanel() {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-white text-sm font-medium">Safety Net</h3>
+        <h3 className="text-white text-sm font-medium">{t("safety.title")}</h3>
         <button
           onClick={handleTakeSnapshot}
           className="px-3 py-1 text-xs bg-green-700 text-white rounded-lg hover:bg-green-600"
@@ -52,7 +54,7 @@ export function SafetyNetPanel() {
               <div className="text-xs text-knit-text-muted">{new Date(s.timestamp).toLocaleString()}</div>
             </div>
             <div className="flex gap-1">
-              <button onClick={() => handleRestore(s.id)} className="px-2 py-1 text-xs bg-knit-primary text-white rounded">Restore</button>
+              <button onClick={() => handleRestore(s.id)} className="px-2 py-1 text-xs bg-knit-primary text-white rounded">{t("action.restore")}</button>
               <button onClick={() => deleteSnapshot(s.id)} className="px-2 py-1 text-xs text-knit-text-muted hover:text-red-400">×</button>
             </div>
           </div>

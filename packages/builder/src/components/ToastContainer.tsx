@@ -1,7 +1,9 @@
+import { useI18n } from "../i18n";
 import { useEffect } from "react";
 import { useUIStore } from "../store/useUIStore";
 
 export function ToastContainer() {
+  const { t } = useI18n();
   const toasts = useUIStore((s) => s.toasts);
   const removeToast = useUIStore((s) => s.removeToast);
 

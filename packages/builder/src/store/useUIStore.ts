@@ -1,3 +1,4 @@
+import { uuid } from "../lib/uuid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -36,7 +37,7 @@ export const useUIStore = create<UIState>()(
         set((state) => ({
           toasts: [
             ...state.toasts,
-            { ...toast, id: crypto.randomUUID() },
+            { ...toast, id: uuid() },
           ].slice(-5),
         })),
 

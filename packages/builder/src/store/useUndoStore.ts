@@ -1,3 +1,4 @@
+import { uuid } from "../lib/uuid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -28,7 +29,7 @@ export const useUndoStore = create<UndoState>()(
       pushSnapshot: (snapshot, label) => {
         const { history, currentIndex } = get();
         const entry: UndoEntry = {
-          id: crypto.randomUUID(),
+          id: uuid(),
           timestamp: Date.now(),
           snapshot,
           label,

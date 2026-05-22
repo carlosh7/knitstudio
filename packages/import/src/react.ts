@@ -1,3 +1,4 @@
+import { uuid } from "./uuid";
 import type { AppSchema, ComponentNode, PageDefinition } from "@knitstudio/core";
 
 function jsxToComponent(jsx: string): ComponentNode {
@@ -39,7 +40,7 @@ export function importFromReact(code: string): AppSchema {
   const returnMatch = code.match(/return\s*\(([\s\S]*?)\)\s*;/);
   if (returnMatch) {
     pages.push({
-      id: crypto.randomUUID(),
+      id: uuid(),
       route: "/",
       title: funcName,
       root: jsxToComponent(returnMatch[1].trim()),
@@ -51,6 +52,6 @@ export function importFromReact(code: string): AppSchema {
     theme: { breakpoints: { sm: 640, md: 768, lg: 1024, xl: 1280 } },
     variables: {},
     templates: {},
-    pages: pages.length > 0 ? pages : [{ id: crypto.randomUUID(), route: "/", title: "Imported", root: { type: "container", key: "root" } }],
+    pages: pages.length > 0 ? pages : [{ id: uuid(), route: "/", title: "Imported", root: { type: "container", key: "root" } }],
   };
 }

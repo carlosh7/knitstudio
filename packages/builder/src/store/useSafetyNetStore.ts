@@ -1,3 +1,4 @@
+import { uuid } from "../lib/uuid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -23,7 +24,7 @@ export const useSafetyNetStore = create<SafetyNetState>()(
 
       takeSnapshot: (label, data) => {
         const snapshot: SafeSnapshot = {
-          id: crypto.randomUUID(),
+          id: uuid(),
           timestamp: Date.now(),
           label,
           data,

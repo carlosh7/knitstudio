@@ -1,3 +1,4 @@
+import { uuid } from "./lib/uuid";
 import type { ComponentNode } from "@knitstudio/core";
 
 export interface Template {
@@ -11,19 +12,19 @@ export interface Template {
 }
 
 function text(text: string): ComponentNode {
-  return { type: "text", key: `text-${crypto.randomUUID().slice(0, 6)}`, props: { tag: "h1", content: text }, styles: { base: { fontSize: "32px", color: "#fff", fontWeight: "bold" } } };
+  return { type: "text", key: `text-${uuid().slice(0, 6)}`, props: { tag: "h1", content: text }, styles: { base: { fontSize: "32px", color: "#fff", fontWeight: "bold" } } };
 }
 
 function button(text: string): ComponentNode {
-  return { type: "button", key: `btn-${crypto.randomUUID().slice(0, 6)}`, props: { text, variant: "primary" }, styles: { base: { background: "#4f46e5", color: "#fff", padding: "10px 20px", borderRadius: "6px", border: "none", cursor: "pointer" } } };
+  return { type: "button", key: `btn-${uuid().slice(0, 6)}`, props: { text, variant: "primary" }, styles: { base: { background: "#4f46e5", color: "#fff", padding: "10px 20px", borderRadius: "6px", border: "none", cursor: "pointer" } } };
 }
 
 function container(children: ComponentNode[], direction: "column" | "row" = "column"): ComponentNode {
-  return { type: "container", key: `container-${crypto.randomUUID().slice(0, 6)}`, styles: { base: { display: "flex", flexDirection: direction, padding: "16px", gap: "8px" } }, children };
+  return { type: "container", key: `container-${uuid().slice(0, 6)}`, styles: { base: { display: "flex", flexDirection: direction, padding: "16px", gap: "8px" } }, children };
 }
 
 function card(children: ComponentNode[]): ComponentNode {
-  return { type: "card", key: `card-${crypto.randomUUID().slice(0, 6)}`, styles: { base: { background: "#1a1a2e", borderRadius: "8px", padding: "20px", border: "1px solid #333" } }, children };
+  return { type: "card", key: `card-${uuid().slice(0, 6)}`, styles: { base: { background: "#1a1a2e", borderRadius: "8px", padding: "20px", border: "1px solid #333" } }, children };
 }
 
 export const templates: Template[] = [

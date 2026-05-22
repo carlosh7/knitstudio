@@ -1,9 +1,11 @@
+import { useI18n } from "../i18n";
 import { useState } from "react";
 import { useBuilderStore } from "../store/useBuilderStore";
 import { useUIStore } from "../store/useUIStore";
 import { createAIProvider } from "@knitstudio/ai";
 
 export function AIPromptPanel() {
+  const { t } = useI18n();
   const editor = useBuilderStore((s) => s.editor);
   const addToast = useUIStore((s) => s.addToast);
   const [prompt, setPrompt] = useState("");
@@ -57,7 +59,7 @@ export function AIPromptPanel() {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-white text-sm font-medium">AI Generate</h3>
+        <h3 className="text-white text-sm font-medium">{t("ai.title")}</h3>
       </div>
 
       <textarea

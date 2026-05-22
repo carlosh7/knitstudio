@@ -1,0 +1,97 @@
+# knitstudio — Portainer Stack
+# Import this file into your existing Portainer:
+#   Portainer → Stacks → + Add stack → paste this content → Deploy
+
+version: "3.9"
+
+name: knitstudio
+
+services:
+  builder:
+    build:
+      context: https://github.com/knitstudio/knitstudio.git
+      dockerfile: docker/builder.Dockerfile
+      target: runner
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://api:3001
+    depends_on:
+      api:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - knitstudio-net
+
+  api:
+    build:
+      context: https://github.com/knitstudio/knitstudio.git
+      dockerfile: docker/api.Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://knitstudio:knitstudio@db:5432/knitstudio
+      REDIS_URL: redis://redis:6379
+      CORS_ORIGIN: http://localhost:3000
+      JWT_SECRET: ${JWT_SECRET:-knitstudio-prod-change-me}
+      KEYSTORE_KEY: ${KEYSTORE_KEY:-0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - knitstudio-net
+
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: knitstudio
+      POSTGRES_PASSWORD: knitstudio
+      POSTGRES_DB: knitstudio
+    volumes:
+      - knitstudio_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U knitstudio"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - knitstudio-net
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - knitstudio_redisdata:/data
+    restart: unless-stopped
+    networks:
+      - knitstudio-net
+
+  mcp:
+    build:
+      context: https://github.com/knitstudio/knitstudio.git
+      dockerfile: docker/mcp.Dockerfile
+    ports:
+      - "3100:3100"
+    environment:
+      - API_URL=http://api:3001
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - knitstudio-net
+
+volumes:
+  knitstudio_pgdata:
+  knitstudio_redisdata:
+
+networks:
+  knitstudio-net:
+    driver: bridge

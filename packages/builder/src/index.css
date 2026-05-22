@@ -1,14 +1,56 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-knit-bg: #0f0f23;
-  --color-knit-bg-alt: #1a1a2e;
-  --color-knit-bg-panel: #16213e;
-  --color-knit-bg-hover: #1e2a4a;
-  --color-knit-border: #2a2a4a;
-  --color-knit-text: #e0e0e0;
-  --color-knit-text-muted: #8899aa;
+  /* ── Light theme (default) ── */
+  --color-knit-bg: #f5f5f7;
+  --color-knit-bg-alt: #ffffff;
+  --color-knit-bg-panel: #f0f0f2;
+  --color-knit-bg-hover: #e8e8ed;
+  --color-knit-border: #d1d1d6;
+  --color-knit-text: #1c1c1e;
+  --color-knit-text-muted: #8e8e93;
   --color-knit-primary: #4f46e5;
   --color-knit-primary-hover: #6366f1;
-  --color-knit-accent: #06b6d4;
+  --color-knit-accent: #0891b2;
+  --color-knit-canvas-bg: #ffffff;
+  --color-knit-input-bg: #ffffff;
+  --color-knit-overlay: rgba(0, 0, 0, 0.15);
+
+  /* ── Dark theme (via .dark class) ── */
+  --color-knit-bg-dark: #0f0f23;
+  --color-knit-bg-alt-dark: #1a1a2e;
+  --color-knit-bg-panel-dark: #16213e;
+  --color-knit-bg-hover-dark: #1e2a4a;
+  --color-knit-border-dark: #2a2a4a;
+  --color-knit-text-dark: #e0e0e0;
+  --color-knit-text-muted-dark: #8899aa;
+  --color-knit-primary-dark: #4f46e5;
+  --color-knit-primary-hover-dark: #6366f1;
+  --color-knit-accent-dark: #06b6d4;
+  --color-knit-canvas-bg-dark: #0f0f23;
+  --color-knit-input-bg-dark: #1a1a2e;
+  --color-knit-overlay-dark: rgba(0, 0, 0, 0.6);
+}
+
+.dark {
+  --color-knit-bg: var(--color-knit-bg-dark);
+  --color-knit-bg-alt: var(--color-knit-bg-alt-dark);
+  --color-knit-bg-panel: var(--color-knit-bg-panel-dark);
+  --color-knit-bg-hover: var(--color-knit-bg-hover-dark);
+  --color-knit-border: var(--color-knit-border-dark);
+  --color-knit-text: var(--color-knit-text-dark);
+  --color-knit-text-muted: var(--color-knit-text-muted-dark);
+  --color-knit-primary: var(--color-knit-primary-dark);
+  --color-knit-primary-hover: var(--color-knit-primary-hover-dark);
+  --color-knit-accent: var(--color-knit-accent-dark);
+  --color-knit-canvas-bg: var(--color-knit-canvas-bg-dark);
+  --color-knit-input-bg: var(--color-knit-input-bg-dark);
+  --color-knit-overlay: var(--color-knit-overlay-dark);
+}
+
+/* Smooth theme transitions */
+*, *::before, *::after {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
 }

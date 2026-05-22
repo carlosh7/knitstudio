@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { fetchProjects, createProject, deleteProject } from "../api/projects";
+import { ThemeToggle } from "../components/ThemeToggle";
+import { LanguageSelector } from "../components/LanguageSelector";
+import { useI18n } from "../i18n";
 
 interface ProjectItem {
   id: string;
@@ -14,6 +17,7 @@ interface DashboardProps {
 }
 
 export function Dashboard({ onOpenProject }: DashboardProps) {
+  const { t } = useI18n();
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showNew, setShowNew] = useState(false);
@@ -44,15 +48,19 @@ export function Dashboard({ onOpenProject }: DashboardProps) {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-white">knitstudio</h1>
-            <p className="text-knit-text-muted text-sm mt-1">Visual Application Builder</p>
+            <h1 className="text-2xl font-bold text-knit-text">knitstudio</h1>
+            <p className="text-knit-text-muted text-sm mt-1">{t("app.tagline")}</p>
           </div>
-          <button
-            onClick={() => setShowNew(!showNew)}
-            className="px-4 py-2 bg-knit-primary text-white rounded-lg text-sm hover:bg-knit-primary-hover transition"
-          >
-            + New Project
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowNew(!showNew)}
+              className="px-4 py-2 bg-knit-primary text-white rounded-lg text-sm hover:bg-knit-primary-hover transition"
+            >
+              + New Project
+            </button>
+            <LanguageSelector />
+            <ThemeToggle />
+          </div>
         </div>
 
         {/* New project form */}
@@ -63,8 +71,8 @@ export function Dashboard({ onOpenProject }: DashboardProps) {
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleCreate()}
-              placeholder="Project name..."
-              className="w-full px-3 py-2 bg-knit-bg border border-knit-border rounded-md text-sm text-white placeholder-knit-text-muted focus:outline-none focus:border-knit-primary mb-3"
+              placeholder={t("project.name")}
+              className="w-full px-3 py-2 bg-knit-bg border border-knit-border rounded-md text-sm text-knit-text placeholder-knit-text-muted focus:outline-none focus:border-knit-primary mb-3"
             />
             <div className="flex gap-2">
               <button
@@ -75,7 +83,7 @@ export function Dashboard({ onOpenProject }: DashboardProps) {
               </button>
               <button
                 onClick={() => setShowNew(false)}
-                className="px-3 py-1.5 text-knit-text-muted rounded-md text-xs hover:text-white"
+                className="px-3 py-1.5 text-knit-text-muted rounded-md text-xs hover:text-knit-text"
               >
                 Cancel
               </button>
@@ -87,23 +95,23 @@ export function Dashboard({ onOpenProject }: DashboardProps) {
         {!loading && projects.length === 0 && (
           <div className="text-center py-20">
             <div className="text-4xl mb-4">🧶</div>
-            <h2 className="text-xl font-semibold text-white mb-2">Welcome to knitstudio</h2>
+            <h2 className="text-xl font-semibold text-knit-text mb-2">{t("project.empty.title")}</h2>
             <p className="text-knit-text-muted text-sm mb-6 max-w-md mx-auto">
-              Create your first project to start building visual applications with drag & drop,
+              {t("project.empty.desc")} visual applications with drag & drop,
               action flows, and data binding.
             </p>
             <button
               onClick={() => setShowNew(true)}
               className="px-6 py-2.5 bg-knit-primary text-white rounded-lg text-sm hover:bg-knit-primary-hover transition"
             >
-              Create your first project
+              {t("project.empty.cta")}
             </button>
           </div>
         )}
 
         {/* Project list */}
         {loading && (
-          <div className="text-center py-20 text-knit-text-muted text-sm">Loading projects...</div>
+          <div className="text-center py-20 text-knit-text-muted text-sm">{t("search.loading")}</div>
         )}
 
         <div className="grid gap-3">
@@ -114,7 +122,7 @@ export function Dashboard({ onOpenProject }: DashboardProps) {
               onClick={() => onOpenProject(project.id)}
             >
               <div>
-                <h3 className="text-sm font-medium text-white">{project.name}</h3>
+                <h3 className="text-sm font-medium text-knit-text">{project.name}</h3>
                 <p className="text-xs text-knit-text-muted mt-0.5">
                   {project.type} · {new Date(project.updated_at).toLocaleDateString()}
                 </p>

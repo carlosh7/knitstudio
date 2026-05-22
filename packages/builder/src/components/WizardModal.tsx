@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { useState } from "react";
 
 interface Step {
@@ -13,6 +14,7 @@ interface WizardProps {
 }
 
 export function WizardModal({ title, steps, onComplete, onClose }: WizardProps) {
+  const { t } = useI18n();
   const [currentStep, setCurrentStep] = useState(0);
 
   return (
@@ -22,8 +24,8 @@ export function WizardModal({ title, steps, onComplete, onClose }: WizardProps) 
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-semibold">{title}</h2>
-          <button onClick={onClose} className="text-knit-text-muted hover:text-white">×</button>
+          <h2 className="text-knit-text font-semibold">{title}</h2>
+          <button onClick={onClose} className="text-knit-text-muted hover:text-knit-text">×</button>
         </div>
 
         {/* Progress bar */}
@@ -40,7 +42,7 @@ export function WizardModal({ title, steps, onComplete, onClose }: WizardProps) 
 
         {/* Current step */}
         <div className="mb-6">
-          <h3 className="text-white text-sm font-medium mb-1">{steps[currentStep].title}</h3>
+          <h3 className="text-knit-text text-sm font-medium mb-1">{steps[currentStep].title}</h3>
           <p className="text-knit-text-muted text-sm">{steps[currentStep].description}</p>
         </div>
 
@@ -48,15 +50,15 @@ export function WizardModal({ title, steps, onComplete, onClose }: WizardProps) 
         <div className="flex justify-between">
           <button
             onClick={currentStep === 0 ? onClose : () => setCurrentStep(currentStep - 1)}
-            className="text-knit-text-muted hover:text-white text-sm px-3 py-1.5"
+            className="text-knit-text-muted hover:text-knit-text text-sm px-3 py-1.5"
           >
-            {currentStep === 0 ? "Cancel" : "Back"}
+            {currentStep === 0 ? t("action.cancel") : t("action.back")}
           </button>
           <button
             onClick={currentStep === steps.length - 1 ? onComplete : () => setCurrentStep(currentStep + 1)}
             className="px-4 py-1.5 bg-knit-primary text-white rounded-lg text-sm hover:bg-knit-primary-hover"
           >
-            {currentStep === steps.length - 1 ? "Finish" : "Next"}
+            {currentStep === steps.length - 1 ? t("action.finish") : t("action.next")}
           </button>
         </div>
       </div>

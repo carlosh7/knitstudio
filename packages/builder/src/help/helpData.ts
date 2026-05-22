@@ -1,78 +1,59 @@
-// Help data for the interactive HelpPanel
-// Each item pairs a UI element with contextual guidance
+import type { MessageKey } from "../i18n/en";
 
 export interface HelpItem {
   id: string;
   title: string;
   description: string;
   icon: string;
-  target?: string; // CSS selector for highlight
-  link?: string; // Link to detailed docs
+  target?: string;
+  link?: string;
 }
 
-export const helpItems: HelpItem[] = [
-  // Dashboard
-  { id: "dashboard", title: "Dashboard", description: "Here you see all your projects. Click any to edit, or create a new one.", icon: "🏠" },
-  { id: "new-project", title: "New Project", description: "Click here to create a new project. Give it a name and start building!", icon: "➕", target: "[data-onboard='new-project']" },
-  { id: "empty-state", title: "Welcome Screen", description: "If you see this, you have no projects yet. Click 'Create your first project' to begin!", icon: "👋" },
+type TFunction = (key: MessageKey) => string;
 
-  // Builder toolbar
-  { id: "toolbar", title: "Toolbar", description: "This is your command center. From here you can access all features of knitstudio.", icon: "🔧" },
-  { id: "mode-toggle", title: "Simple / Advanced", description: "Switch between Simple mode (3 buttons, great for beginners) and Advanced mode (full builder, all panels).", icon: "🔄" },
-  { id: "search", title: "Search (Cmd+K)", description: "Press Cmd+K (Mac) or Ctrl+K (Windows) to open the global search. Find pages, components, and actions instantly.", icon: "🔍" },
-  { id: "publish", title: "Publish", description: "When your page is ready, click Publish. In Simple mode, a wizard guides you through the process.", icon: "🚀" },
-  { id: "back-dashboard", title: "← Dashboard", description: "Click here to go back to your project list at any time. Your work is auto-saved.", icon: "🔙" },
-
-  // Panels
-  { id: "components-panel", title: "Components Panel", description: "All 35+ components are here. Drag any onto the canvas to start building your UI.", icon: "🧩" },
-  { id: "actions-panel", title: "Actions Panel", description: "The visual flow editor. Connect components to APIs, add logic, and create interactions.", icon: "⚡" },
-  { id: "data-panel", title: "Data Panel", description: "Connect your UI to real APIs. Add data sources, bind them to components, and execute with one click.", icon: "🔗" },
-  { id: "ai-panel", title: "AI Panel", description: "Describe what you want and knitstudio's AI generates the layout. Requires an OpenAI API key.", icon: "🤖" },
-  { id: "safety-panel", title: "Safety Net", description: "Take snapshots of your work so you can always go back. Like a time machine for your project.", icon: "🛟" },
-  { id: "versions-panel", title: "Version Browser", description: "See every saved version of your page. Compare changes and rollback if needed.", icon: "📋" },
-  { id: "monitor-panel", title: "Monitor", description: "Real-time metrics: load times, export times, and error tracking for your builder instance.", icon: "📊" },
-  { id: "selfedit-panel", title: "Self-Edit Mode", description: "Advanced mode that lets you edit knitstudio's own interface. Use with caution!", icon: "🔮" },
-  { id: "sandbox-panel", title: "Component Sandbox", description: "Test components in isolation. Select a component, tweak its props, and see changes in real-time.", icon: "🧪" },
-
-  // Features
-  { id: "quick-edit", title: "Quick Edit (E key)", description: "Select a text or button component on the canvas and press 'E' to edit its content inline.", icon: "✏️" },
-  { id: "shortcuts", title: "Keyboard Shortcuts (?)", description: "Press '?' to see all available keyboard shortcuts. Undo, redo, save, and more.", icon: "⌨️" },
-  { id: "grid", title: "Grid Settings (⊞)", description: "Configure snap-to-grid and show/hide the grid overlay for precise alignment.", icon: "⊞" },
-  { id: "showcase", title: "Showcase Gallery (🖼)", description: "Browse example projects for inspiration. Click any to use it as a starting point.", icon: "🖼" },
-  { id: "changelog", title: "Changelog (📋)", description: "See what changed in each version of knitstudio. New features, fixes, and improvements.", icon: "📋" },
-  { id: "roadmap", title: "Roadmap (🗺)", description: "See what's coming next. Track progress across all development phases.", icon: "🗺" },
-  { id: "feedback", title: "Feedback (💬)", description: "Send us your thoughts! Report bugs, suggest features, or just say hi.", icon: "💬" },
-  { id: "settings", title: "Settings (⚙)", description: "Configure your OpenAI API key for AI generation, or import a page from a URL.", icon: "⚙" },
-
-  // Canvas
-  { id: "canvas", title: "Canvas", description: "This is your design area. Drag components here, select them, move them around. What you see is what you get.", icon: "🎨" },
-  { id: "component-select", title: "Selecting Components", description: "Click any component on the canvas to select it. You can then edit, move, or delete it.", icon: "👆" },
-  { id: "component-drag", title: "Drag & Drop", description: "Grab components from the panel and drag them onto the canvas. Drop them where you want them.", icon: "🖱️" },
-
-  // Wizards
-  { id: "wizard", title: "Publish Wizard", description: "In Simple mode, clicking Publish opens a wizard that guides you through creating a page step by step.", icon: "🧙" },
-  { id: "template-selector", title: "Template Selector", description: "Choose from 5 levels of templates — from simple pages to full applications with auth and databases.", icon: "📄" },
-];
-
-export const gettingStartedSteps = [
-  { id: "welcome", title: "Welcome!", description: "You're in the builder. This is where you design your app visually.", icon: "👋" },
-  { id: "explore-panels", title: "Explore Panels", description: "Click any button in the toolbar to open a panel. Try 'Components' to see available building blocks.", icon: "🧩" },
-  { id: "add-component", title: "Add a Component", description: "Open the Components panel and drag a 'Text' component onto the canvas.", icon: "📝" },
-  { id: "edit-text", title: "Edit Text", description: "Select the text you just added and press 'E' to edit it. Type something fun!", icon: "✏️" },
-  { id: "add-more", title: "Add More Components", description: "Try adding a Button, a Card, or a Container. Experiment!", icon: "➕" },
-  { id: "publish", title: "Publish", description: "When you're happy, click Publish. You can always come back and edit later.", icon: "🚀" },
-  { id: "explore-more", title: "Explore More", description: "Try the Data panel to connect an API, or the AI panel to generate layouts.", icon: "🔍" },
-];
-
-export function getHelpForId(id: string): HelpItem | undefined {
-  return helpItems.find((item) => item.id === id);
+export function getHelpItems(t: TFunction): HelpItem[] {
+  return [
+    { id: "dashboard", title: t("help.dashboard"), description: t("help.dashboard_desc"), icon: "🏠" },
+    { id: "new-project", title: t("help.new_project"), description: t("help.new_project_desc"), icon: "➕", target: "[data-onboard='new-project']" },
+    { id: "empty-state", title: t("help.welcome_screen"), description: t("help.welcome_screen_desc"), icon: "👋" },
+    { id: "toolbar", title: t("help.toolbar"), description: t("help.toolbar_desc"), icon: "🔧" },
+    { id: "mode-toggle", title: t("help.mode_toggle"), description: t("help.mode_toggle_desc"), icon: "🔄" },
+    { id: "search", title: t("help.search"), description: t("help.search_desc"), icon: "🔍" },
+    { id: "publish", title: t("help.publish"), description: t("help.publish_desc"), icon: "🚀" },
+    { id: "back-dashboard", title: t("help.back_dashboard"), description: t("help.back_dashboard_desc"), icon: "🔙" },
+    { id: "components-panel", title: t("help.components_panel"), description: t("help.components_panel_desc"), icon: "🧩" },
+    { id: "actions-panel", title: t("help.actions_panel"), description: t("help.actions_panel_desc"), icon: "⚡" },
+    { id: "data-panel", title: t("help.data_panel"), description: t("help.data_panel_desc"), icon: "🔗" },
+    { id: "ai-panel", title: t("help.ai_panel"), description: t("help.ai_panel_desc"), icon: "🤖" },
+    { id: "safety-panel", title: t("help.safety_panel"), description: t("help.safety_panel_desc"), icon: "🛟" },
+    { id: "versions-panel", title: t("help.versions_panel"), description: t("help.versions_panel_desc"), icon: "📋" },
+    { id: "monitor-panel", title: t("help.monitor_panel"), description: t("help.monitor_panel_desc"), icon: "📊" },
+    { id: "selfedit-panel", title: t("help.selfedit_panel"), description: t("help.selfedit_panel_desc"), icon: "🔮" },
+    { id: "sandbox-panel", title: t("help.sandbox_panel"), description: t("help.sandbox_panel_desc"), icon: "🧪" },
+    { id: "quick-edit", title: t("help.quick_edit"), description: t("help.quick_edit_desc"), icon: "✏️" },
+    { id: "shortcuts", title: t("help.shortcuts"), description: t("help.shortcuts_desc"), icon: "⌨️" },
+    { id: "grid", title: t("help.grid"), description: t("help.grid_desc"), icon: "⊞" },
+    { id: "showcase", title: t("help.showcase"), description: t("help.showcase_desc"), icon: "🖼" },
+    { id: "changelog", title: t("help.changelog"), description: t("help.changelog_desc"), icon: "📋" },
+    { id: "roadmap", title: t("help.roadmap"), description: t("help.roadmap_desc"), icon: "🗺" },
+    { id: "feedback", title: t("help.feedback"), description: t("help.feedback_desc"), icon: "💬" },
+    { id: "settings", title: t("help.settings"), description: t("help.settings_desc"), icon: "⚙" },
+    { id: "canvas", title: t("help.canvas"), description: t("help.canvas_desc"), icon: "🎨" },
+    { id: "component-select", title: t("help.component_select"), description: t("help.component_select_desc"), icon: "👆" },
+    { id: "component-drag", title: t("help.component_drag"), description: t("help.component_drag_desc"), icon: "🖱️" },
+    { id: "wizard", title: t("help.wizard"), description: t("help.wizard_desc"), icon: "🧙" },
+    { id: "template-selector", title: t("help.template_selector"), description: t("help.template_selector_desc"), icon: "📄" },
+  ];
 }
 
-export function searchHelp(query: string): HelpItem[] {
-  const q = query.toLowerCase();
-  return helpItems.filter(
-    (item) =>
-      item.title.toLowerCase().includes(q) ||
-      item.description.toLowerCase().includes(q)
-  );
+export function getGettingStartedSteps(t: TFunction) {
+  return [
+    { id: "welcome", title: t("help.gs_welcome"), description: t("help.gs_welcome_desc"), icon: "👋" },
+    { id: "explore-panels", title: t("help.gs_explore"), description: t("help.gs_explore_desc"), icon: "🧩" },
+    { id: "add-component", title: t("help.gs_add"), description: t("help.gs_add_desc"), icon: "📝" },
+    { id: "edit-text", title: t("help.gs_edit"), description: t("help.gs_edit_desc"), icon: "✏️" },
+    { id: "add-more", title: t("help.gs_add_more"), description: t("help.gs_add_more_desc"), icon: "➕" },
+    { id: "publish", title: t("help.gs_publish"), description: t("help.gs_publish_desc"), icon: "🚀" },
+    { id: "explore-more", title: t("help.gs_explore_more"), description: t("help.gs_explore_more_desc"), icon: "🔍" },
+  ];
 }

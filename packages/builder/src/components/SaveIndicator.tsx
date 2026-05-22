@@ -1,14 +1,16 @@
+import { useI18n } from "../i18n";
 import { useUIStore } from "../store/useUIStore";
 
-const indicators = {
-  saved: { label: "Saved", color: "text-green-400", icon: "✓" },
-  saving: { label: "Saving...", color: "text-yellow-400", icon: "⏳" },
-  unsaved: { label: "Unsaved", color: "text-orange-400", icon: "●" },
-  error: { label: "Save failed", color: "text-red-400", icon: "✕" },
-};
-
 export function SaveIndicator() {
+  const { t } = useI18n();
   const indicator = useUIStore((s) => s.saveIndicator);
+
+  const indicators = {
+    saved: { label: t("editor.save.success"), color: "text-green-400", icon: "✓" },
+    saving: { label: t("editor.autosave"), color: "text-yellow-400", icon: "⏳" },
+    unsaved: { label: "Unsaved", color: "text-orange-400", icon: "●" },
+    error: { label: t("editor.save.error"), color: "text-red-400", icon: "✕" },
+  };
 
   const { label, color, icon } = indicators[indicator];
 

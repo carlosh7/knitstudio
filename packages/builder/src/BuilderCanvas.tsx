@@ -7,12 +7,14 @@ export function BuilderCanvas() {
   const setEditor = useBuilderStore((s) => s.setEditor);
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
-      <KnitCanvas
-        projectId={projectId}
-        pageId={pageId}
-        onReady={setEditor}
-      />
+    <div className="flex-1 flex flex-col overflow-auto bg-knit-canvas-bg min-h-0" style={{ minHeight: 0 }}>
+      <div className="flex-1 relative" style={{ minHeight: "calc(100vh - 48px)" }}>
+        <KnitCanvas
+          projectId={projectId}
+          pageId={pageId}
+          onReady={setEditor}
+        />
+      </div>
     </div>
   );
 }

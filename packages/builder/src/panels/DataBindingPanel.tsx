@@ -1,7 +1,10 @@
+import { uuid } from "../lib/uuid";
+import { useI18n } from "../i18n";
 import { useState } from "react";
 import { useDataBindingStore } from "../store/useDataBindingStore";
 
 export function DataBindingPanel() {
+  const { t } = useI18n();
   const sources = useDataBindingStore((s) => s.sources);
   const bindings = useDataBindingStore((s) => s.bindings);
   const debugMode = useDataBindingStore((s) => s.debugMode);
@@ -23,7 +26,7 @@ export function DataBindingPanel() {
 
   const handleAdd = () => {
     if (!name || !url) return;
-    addSource({ id: crypto.randomUUID(), name, url, method });
+    addSource({ id: uuid(), name, url, method });
     setName("");
     setUrl("");
     setShowForm(false);
@@ -34,7 +37,7 @@ export function DataBindingPanel() {
       {/* Left: Sources */}
       <div className="w-1/2 border-r border-knit-border p-3 overflow-y-auto">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-white text-sm font-medium">Data Sources</h3>
+          <h3 className="text-white text-sm font-medium">{t("data.title")}</h3>
           <div className="flex gap-2">
             <button
               onClick={() => setDebugMode(!debugMode)}
@@ -48,14 +51,14 @@ export function DataBindingPanel() {
 
         {showForm && (
           <div className="bg-knit-bg rounded-lg p-3 mb-3 border border-knit-border space-y-2">
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Source name" className="w-full px-2 py-1 bg-knit-bg-alt border border-knit-border rounded text-xs text-white" />
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder={t("data.source_name")} className="w-full px-2 py-1 bg-knit-bg-alt border border-knit-border rounded text-xs text-white" />
             <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://api.example.com/data" className="w-full px-2 py-1 bg-knit-bg-alt border border-knit-border rounded text-xs text-white" />
             <select value={method} onChange={(e) => setMethod(e.target.value as "GET" | "POST")} className="w-full px-2 py-1 bg-knit-bg-alt border border-knit-border rounded text-xs text-white">
               <option>GET</option><option>POST</option>
             </select>
             <div className="flex gap-2">
-              <button onClick={handleAdd} className="px-3 py-1 bg-knit-primary text-white rounded text-xs">Save</button>
-              <button onClick={() => setShowForm(false)} className="text-knit-text-muted text-xs">Cancel</button>
+              <button onClick={handleAdd} className="px-3 py-1 bg-knit-primary text-white rounded text-xs">{t("data.save")}</button>
+              <button onClick={() => setShowForm(false)} className="text-knit-text-muted text-xs">{t("action.cancel")}</button>
             </div>
           </div>
         )}
@@ -90,8 +93,8 @@ export function DataBindingPanel() {
       {/* Right: Logs */}
       <div className="w-1/2 p-3 overflow-y-auto">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-white text-sm font-medium">Execution Log</h3>
-          <button onClick={clearLogs} className="text-xs text-knit-text-muted hover:text-white">Clear</button>
+          <h3 className="text-white text-sm font-medium">{t("data.logs_title")}</h3>
+          <button onClick={clearLogs} className="text-xs text-knit-text-muted hover:text-white">{t("data.clear_logs")}</button>
         </div>
 
         <div className="space-y-1">
@@ -101,7 +104,7 @@ export function DataBindingPanel() {
               <span className="text-knit-text-muted">{sources.find((s) => s.id === log.sourceId)?.name || log.sourceId}</span>
             </div>
           ))}
-          {logs.length === 0 && <div className="text-xs text-knit-text-muted text-center py-8">No execution logs yet</div>}
+          {logs.length === 0 && <div className="text-xs text-knit-text-muted text-center py-8">{t("data.logs_empty")}</div>}
         </div>
       </div>
     </div>

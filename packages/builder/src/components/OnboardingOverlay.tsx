@@ -1,7 +1,9 @@
+import { useI18n } from "../i18n";
 import { useEffect, useState } from "react";
 import { useOnboardingStore, steps } from "../store/useOnboardingStore";
 
 export function OnboardingOverlay() {
+  const { t } = useI18n();
   const isComplete = useOnboardingStore((s) => s.isComplete());
   const dismissed = useOnboardingStore((s) => s.dismissed);
   const profile = useOnboardingStore((s) => s.profile);
@@ -27,7 +29,7 @@ export function OnboardingOverlay() {
       <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[60]">
         <div className="bg-knit-bg-alt border border-knit-border rounded-xl p-6 max-w-sm w-full mx-4 text-center">
           <div className="text-3xl mb-3">🧶</div>
-          <h2 className="text-white text-lg font-semibold mb-2">Welcome to knitstudio!</h2>
+          <h2 className="text-knit-text text-lg font-semibold mb-2">{t("onboarding.welcome_title")}</h2>
           <p className="text-knit-text-muted text-sm mb-4">Tell us about yourself so we can tailor the experience.</p>
           <div className="space-y-2">
             {[
@@ -49,7 +51,7 @@ export function OnboardingOverlay() {
               </button>
             ))}
           </div>
-          <button onClick={dismiss} className="mt-4 text-xs text-knit-text-muted hover:text-white">Skip onboarding</button>
+          <button onClick={dismiss} className="mt-4 text-xs text-knit-text-muted hover:text-knit-text">{t("onboarding.skip")}</button>
         </div>
       </div>
     );
@@ -64,13 +66,13 @@ export function OnboardingOverlay() {
       <div className="bg-knit-bg-alt border border-knit-border rounded-xl p-4 max-w-xs shadow-2xl">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs text-knit-text-muted">Step {currentStep + 1}/{steps.length}</span>
-          <button onClick={dismiss} className="text-knit-text-muted hover:text-white text-xs">Skip all</button>
+          <button onClick={dismiss} className="text-knit-text-muted hover:text-knit-text text-xs">{t("action.skip_all")}</button>
         </div>
-        <h3 className="text-white text-sm font-medium mb-1">{step.title}</h3>
+        <h3 className="text-knit-text text-sm font-medium mb-1">{step.title}</h3>
         <p className="text-knit-text-muted text-xs mb-3">{step.description}</p>
         <div className="flex gap-2">
           {currentStep > 0 && (
-            <button onClick={() => setCurrentStep(currentStep - 1)} className="px-3 py-1 text-xs text-knit-text-muted hover:text-white">Back</button>
+            <button onClick={() => setCurrentStep(currentStep - 1)} className="px-3 py-1 text-xs text-knit-text-muted hover:text-knit-text">{t("action.back")}</button>
           )}
           <button
             onClick={() => {

@@ -12,7 +12,7 @@ if (!root) throw new Error("Root element not found");
 
 createRoot(root).render(
   <StrictMode>
-    <I18nProvider locale="en">
+    <I18nProvider>
       <App />
     </I18nProvider>
   </StrictMode>

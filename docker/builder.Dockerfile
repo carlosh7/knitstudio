@@ -15,7 +15,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN pnpm build
+RUN rm -rf packages/*/dist && pnpm build
 
 FROM nginx:alpine AS runner
 COPY --from=builder /app/packages/builder/dist /usr/share/nginx/html
